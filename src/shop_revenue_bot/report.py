@@ -6,7 +6,7 @@ from datetime import date
 from io import BytesIO
 
 from openpyxl import Workbook
-from openpyxl.styles import Font, PatternFill
+from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
 
 from .db import Sale
@@ -82,16 +82,20 @@ def build_excel(sales: list[Sale]) -> bytes:
         amounts = by_day[d]
         days.append([d, len(amounts), sum(amounts), round(sum(amounts) / len(amounts), 2)])
 
-    for sheet in (ws, days):
+    for row in ws.iter_rows(min_row=2, min_col=4, max_col=4):
+        row[0].alignment = Alignment(indent=1)  # keep comments off the right-aligned sums
+
+    for sheet, widths in ((ws, (12, 8, 13, 28)), (days, (12, 10, 14, 17))):
         for cell in sheet[1]:
             cell.font, cell.fill = header_font, header_fill
+            cell.alignment = Alignment(horizontal="center")
         for row in sheet.iter_rows(min_row=2):
             # lowercase codes: some viewers (iOS) read uppercase "DD" as day of the year
             row[0].number_format = "dd.mm.yyyy"
             for cell in row[2:]:
                 if isinstance(cell.value, (int, float)):
                     cell.number_format = "#,##0.00"
-        for i, width in enumerate((12, 10, 14, 30), start=1):
+        for i, width in enumerate(widths, start=1):
             sheet.column_dimensions[get_column_letter(i)].width = width
         sheet.freeze_panes = "A2"
 
