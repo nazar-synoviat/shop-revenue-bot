@@ -86,7 +86,8 @@ def build_excel(sales: list[Sale]) -> bytes:
         for cell in sheet[1]:
             cell.font, cell.fill = header_font, header_fill
         for row in sheet.iter_rows(min_row=2):
-            row[0].number_format = "DD.MM.YYYY"
+            # lowercase codes: some viewers (iOS) read uppercase "DD" as day of the year
+            row[0].number_format = "dd.mm.yyyy"
             for cell in row[2:]:
                 if isinstance(cell.value, (int, float)):
                     cell.number_format = "#,##0.00"
