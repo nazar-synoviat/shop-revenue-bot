@@ -1,0 +1,20 @@
+[project]
+name = "shop-revenue-bot"
+version = "0.1.0"
+description = "Add your description here"
+authors = [
+    { name = "Nazar Synovyat", email = "kidik333404991@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "aiogram>=3.31.0",
+    "openpyxl>=3.1.5",
+    "python-dotenv>=1.2.4",
+]
+
+[project.scripts]
+shop-revenue-bot = "shop_revenue_bot:main"
+
+[build-system]
+requires = ["uv_build>=0.13.1,<0.14.0"]
+build-backend = "uv_build"
