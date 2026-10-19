@@ -20,7 +20,7 @@ Python 3.12, [aiogram 3](https://docs.aiogram.dev/), SQLite, openpyxl, [uv](http
 ## Запуск
 
 ```bash
-git clone https://github.com/<user>/shop-revenue-bot.git
+git clone https://github.com/nazar-synoviat/shop-revenue-bot.git
 cd shop-revenue-bot
 cp .env.example .env      # вставте токен від @BotFather
 uv run shop-revenue-bot
